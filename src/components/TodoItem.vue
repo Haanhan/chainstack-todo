@@ -3,7 +3,7 @@
 
         <Checkbox @changed="setDone"></Checkbox>
 
-        <p class="flex-1" :class="textClass">
+        <p class="flex-1" :class="textClass" @click="edit">
             {{todo.text}}
         </p>
         
@@ -44,8 +44,14 @@
             setDone(value){
                 this.UPDATE_TODO({
                     index: this.index,
-                    todo: {...this.todo, isDone: value}
+                    todo: { ...this.todo, isDone: value }
                 });
+            },
+            edit(){
+                this.UPDATE_TODO({
+                    index: this.index,
+                    todo: { ...this.todo, isEditMode: true }
+                })
             }
         }
     }
