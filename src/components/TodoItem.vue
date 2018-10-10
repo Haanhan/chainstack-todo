@@ -1,30 +1,52 @@
 <template>
     <a class="panel-block">
 
-        <span class="is-size-4 has-text-info inline-s cursor-pointer" >
-            <span class=""></span>
-        </span>
+        <Checkbox @changed="setDone"></Checkbox>
 
-        <span class="is-size-4 has-text-info inline-s cursor-pointer">
-            <span class=""></span>
-        </span>
-        <p class="flex-1">
-            {{text}}
+        <p class="flex-1" :class="textClass">
+            {{todo.text}}
         </p>
         
-        <button class="button is-text is-danger is-inverted">
+        <button class="button is-text is-danger is-inverted"
+            @click="REMOVE_TODO">
             <span class="icon">
                 <span class="fa fa-trash"></span>
             </span>
         </button>
-        
     </a>
 </template>
 
 <script>
+    import Checkbox from "./Checkbox.vue";
+    import { mapMutations } from "vuex";
     export default{
+        components: {
+            Checkbox
+        },
         props:{
-            text: { type: String },
+            todo: { type: Object },
+            index: {type: Number, required: true }
+        },
+        computed:{
+            textClass(){
+                return this.todo.isPending ?
+                    "has-text-grey-light" :
+                this.todo.isDone ? 
+                    "strikeout" :
+                    "";
+            }
+        },
+        methods:{
+            ...mapMutations([
+                "UPDATE_TODO",
+                "REMOVE_TODO"
+                ]),
+            setDone(value){
+                this.UPDATE_TODO({
+                    index: this.index,
+                    todo: {...this.todo, isDone: value}
+                });
+            }
         }
     }
 </script>

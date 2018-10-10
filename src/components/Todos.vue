@@ -1,7 +1,7 @@
 <template>
     <div class="panel">
-        <template v-for="todo in todoList">
-            <TodoItem :text="todo.text" :key="todo.id"></TodoItem>
+        <template v-for="(todo, index) in todoList">
+            <TodoItem :todo="todo" :key="todo.id" :index="index"></TodoItem>
         </template>
     </div>
 </template>

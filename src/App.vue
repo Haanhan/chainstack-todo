@@ -3,7 +3,7 @@
       <section class="section">
           <h3 class="title is-3 level-left">To-do List</h3>
           
-          <add-input placeholder="Add a new item to do">
+          <add-input placeholder="Add a new item to do" @btnClick="ADD_TODO" >
             <span class="fa fa-plus"></span>
           </add-input>
 
@@ -29,7 +29,7 @@
 <script>
 import AddInput from "./components/InputGroup.vue";
 import Todos from "./components/Todos.vue";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: 'app',
@@ -41,6 +41,9 @@ export default {
     ...mapState({
       hasTodo: state => state.todoList.length > 0
     })
+  },
+  methods:{
+    ...mapMutations(["ADD_TODO"]),
   }
 }
 </script>
@@ -72,6 +75,10 @@ $inline-s: floor($inline-m / 2);
 
 .cursor-pointer{
     cursor:pointer;
+}
+
+.strikeout{
+  text-decoration: line-through
 }
 
 </style>
