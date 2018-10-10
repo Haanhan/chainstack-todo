@@ -2,40 +2,45 @@
     <div class="container">
       <section class="section">
           <h3 class="title is-3 level-left">To-do List</h3>
-          <div class="field has-addons">
-              <div class="control is-expanded">
-                  <input class="input is-large" placeholder="Add a new item to do" type="text"/>
-              </div>
-              <div class="control">
-                  <button class="button is-primary is-large"
-                      onClick={addTodo} >
-                      <span class="fa fa-plus"></span>
-                  </button>
-              </div>
-          </div>
+          
+          <add-input placeholder="Add a new item to do">
+            <span class="fa fa-plus"></span>
+          </add-input>
 
-          <div class="hero is-light">
+          <div class="hero is-light" v-show="!hasTodo">
             <div class="hero-body has-text-centered">
             <div class="stack-m fa fa-clipboard-list fa-3x"></div>
               <h1 class="title is-4">You have nothing to do for now.</h1>
               <p>Add to get started.</p>
             </div>
           </div>
-          <div class="notification is-info">
+
+          <div class="notification is-info" v-show="hasTodo">
               <span class="inline-m"><span class="far fa-lightbulb"></span></span> 
               <span class="has-text-weight-bold inline-s">Tip:</span> Click on to-do item to edit.
           </div>
 
-      
+          <Todos></Todos>
+
       </section>
   </div>
 </template>
 
 <script>
+import AddInput from "./components/InputGroup.vue";
+import Todos from "./components/Todos.vue";
+import { mapState } from "vuex";
 
 export default {
   name: 'app',
   components: {
+    AddInput,
+    Todos,
+  },
+  computed:{
+    ...mapState({
+      hasTodo: state => state.todoList.length > 0
+    })
   }
 }
 </script>
@@ -61,9 +66,9 @@ $inline-s: floor($inline-m / 2);
     margin-right: $inline-s;
 }
 
-// .flex-1{
-//     flex:1;
-// }
+.flex-1{
+    flex:1;
+}
 
 .cursor-pointer{
     cursor:pointer;
