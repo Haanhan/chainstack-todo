@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
     props: {
@@ -49,6 +49,9 @@ export default {
         ...mapMutations([
             "UPDATE_TODO"
         ]),
+        ...mapActions([
+            "updateTodo"
+        ]),
         cancel(){
             this.UPDATE_TODO({
                 ...this.todo, 
@@ -56,7 +59,7 @@ export default {
             });
         },
         update(){
-            this.UPDATE_TODO({
+            this.updateTodo({
                 ...this.todo, 
                 text: this.inputValue, 
                 isEditMode: false

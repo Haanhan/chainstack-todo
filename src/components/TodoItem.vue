@@ -18,7 +18,7 @@
 
 <script>
     import Checkbox from "./Checkbox.vue";
-    import { mapMutations } from "vuex";
+    import { mapMutations, mapActions } from "vuex";
     export default{
         components: {
             Checkbox
@@ -29,20 +29,22 @@
         },
         computed:{
             textClass(){
-                return this.todo.isPending ?
-                    "has-text-grey-light" :
-                this.todo.isDone ? 
-                    "strikeout" :
-                    "";
+                let classes = "";
+                if(this.todo.isPending) classes = "has-text-grey-light ";
+                if(this.todo.isDone) classes += "strikeout";
+                return classes;
             }
         },
         methods:{
             ...mapMutations([
-                "UPDATE_TODO",
-                "REMOVE_TODO"
+                "REMOVE_TODO",
+                "UPDATE_TODO"
                 ]),
+            ...mapActions([
+                "updateTodo"
+            ]),
             setDone(value){
-                this.UPDATE_TODO({
+                this.updateTodo({
                     ...this.todo, 
                     isDone: value
                 });

@@ -42,11 +42,32 @@ export default new Vuex.Store({
       const todo = {
         id: Date.now().toString(),
         text: text,
-        isPending: false,
+        isPending: true,
         isEditMode: false,
         isDone: false
       }
       state.todoList.push(todo);
+      
+      // simulate fetch
+      return new Promise((resolve) => {
+        setTimeout(()=>{
+          commit("UPDATE_TODO", {...todo, isPending: false});
+        }, 500)
+      });
+    },
+    updateTodo({commit}, todo){
+      todo.isPending = true;
+      commit("UPDATE_TODO", todo);
+
+      // simulate fetch
+      setTimeout(()=>{
+        todo.isPending = false;
+        commit("UPDATE_TODO", {...todo, isPending: false});
+      }, 500)
+    },
+    removeTodo({commit}, id){
+      
     }
+    
   }
 })
