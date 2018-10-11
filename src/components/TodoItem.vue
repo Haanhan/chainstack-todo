@@ -1,7 +1,7 @@
 <template>
     <a class="panel-block">
 
-        <Checkbox @changed="setDone"></Checkbox>
+        <Checkbox @changed="setDone" :isPending="this.todo.isPending"></Checkbox>
 
         <p class="flex-1" :class="textClass" @click="edit">
             {{todo.text}}
