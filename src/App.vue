@@ -42,8 +42,14 @@ export default {
       hasTodo: state => state.todoList.length > 0
     })
   },
+  created(){
+    this.SET_TODOLIST(JSON.parse(window.localStorage.getItem("todoList")) || []);
+  },
   methods:{
-    ...mapMutations(["ADD_TODO"]),
+    ...mapMutations([
+      "ADD_TODO",
+      "SET_TODOLIST"
+      ]),
   }
 }
 </script>
