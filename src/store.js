@@ -9,8 +9,8 @@ const storeTodo = (todoList) => {
 
 export default new Vuex.Store({
   state: {
-    todoList: [
-    ]
+    todoList: [],
+    isLoading: false
   },
   mutations: {
     SET_TODOLIST(state, todoList){
@@ -65,8 +65,18 @@ export default new Vuex.Store({
         commit("UPDATE_TODO", {...todo, isPending: false});
       }, 500)
     },
-    removeTodo({commit}, id){
-      
+    removeTodo({commit, state}, id){
+      let index = state.todoList.findIndex(todo => todo.id === id);
+      commit("REMOVE_TODO", index);
+    },
+    getAllTodos({commit,state}){
+      state.isLoading = true;
+
+      // simulate fetch
+      setTimeout(()=>{
+        commit("SET_TODOLIST", JSON.parse(window.localStorage.getItem("todoList")) || []);
+        state.isLoading = false;
+      }, 1000);
     }
     
   }

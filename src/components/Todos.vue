@@ -1,10 +1,9 @@
 <template>
     <div class="panel">
-        <template v-for="(todo, index) in todoList">
+        <template v-for="(todo) in todoList">
             <component :is="componentType(todo.isEditMode)" 
                 :todo="todo" 
-                :key="todo.id"
-                :index="index"></component>
+                :key="todo.id"></component>
         </template>
     </div>
 </template>

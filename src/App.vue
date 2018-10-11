@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-      <section class="section">
+
+      <loader v-if="isLoading"></loader>
+
+      <section class="section" v-else>
           <h3 class="title is-3 level-left">To-do List</h3>
           
           <add-input placeholder="Add a new item to do" @btnClick="addTodo" >
@@ -29,6 +32,7 @@
 <script>
 import AddInput from "./components/InputGroup.vue";
 import Todos from "./components/Todos.vue";
+import Loader from "./components/Loader.vue";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -36,22 +40,24 @@ export default {
   components: {
     AddInput,
     Todos,
+    Loader
   },
   computed:{
     ...mapState({
-      hasTodo: state => state.todoList.length > 0
+      hasTodo: state => state.todoList.length > 0,
+      isLoading: state=> state.isLoading
     })
   },
   created(){
-    this.SET_TODOLIST(JSON.parse(window.localStorage.getItem("todoList")) || []);
+    this.getAllTodos();
   },
   methods:{
     ...mapMutations([
       "ADD_TODO",
-      "SET_TODOLIST"
       ]),
     ...mapActions([
-      "addTodo"
+      "addTodo",
+      "getAllTodos"
     ])
   }
 }

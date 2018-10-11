@@ -8,7 +8,7 @@
         </p>
         
         <button class="button is-text is-danger is-inverted"
-            @click="REMOVE_TODO(index)">
+            @click="removeTodo(todo.id)">
             <span class="icon">
                 <span class="fa fa-trash"></span>
             </span>
@@ -24,8 +24,7 @@
             Checkbox
         },
         props:{
-            todo: { type: Object },
-            index: {type: Number, required: true }
+            todo: { type: Object }
         },
         computed:{
             textClass(){
@@ -37,11 +36,11 @@
         },
         methods:{
             ...mapMutations([
-                "REMOVE_TODO",
                 "UPDATE_TODO"
                 ]),
             ...mapActions([
-                "updateTodo"
+                "updateTodo",
+                "removeTodo"
             ]),
             setDone(value){
                 this.updateTodo({
