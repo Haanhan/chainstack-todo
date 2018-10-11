@@ -31,12 +31,22 @@ export default new Vuex.Store({
       storeTodo(state.todoList);
     },
     UPDATE_TODO (state, payload){
-      state.todoList[payload.index] = payload.todo;
+      let index = state.todoList.findIndex(todo => todo.id === payload.id);
+      state.todoList[index] = payload;
       state.todoList = [...state.todoList];
       storeTodo(state.todoList);
     }
   },
   actions: {
-
+    addTodo({commit, state}, text){
+      const todo = {
+        id: Date.now().toString(),
+        text: text,
+        isPending: false,
+        isEditMode: false,
+        isDone: false
+      }
+      state.todoList.push(todo);
+    }
   }
 })

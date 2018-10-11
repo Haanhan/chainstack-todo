@@ -43,14 +43,14 @@
                 ]),
             setDone(value){
                 this.UPDATE_TODO({
-                    index: this.index,
-                    todo: { ...this.todo, isDone: value }
+                    ...this.todo, 
+                    isDone: value
                 });
             },
             edit(){
                 this.UPDATE_TODO({
-                    index: this.index,
-                    todo: { ...this.todo, isEditMode: true }
+                    ...this.todo, 
+                    isEditMode: true
                 })
             }
         }

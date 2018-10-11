@@ -51,14 +51,15 @@ export default {
         ]),
         cancel(){
             this.UPDATE_TODO({
-                index: this.index,
-                todo: { ...this.todo, isEditMode: false }
+                ...this.todo, 
+                isEditMode: false
             });
         },
         update(){
             this.UPDATE_TODO({
-                index: this.index,
-                todo: { ...this.todo, text: this.inputValue, isEditMode: false }
+                ...this.todo, 
+                text: this.inputValue, 
+                isEditMode: false
             });
         }
     }

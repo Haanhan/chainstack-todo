@@ -3,7 +3,7 @@
       <section class="section">
           <h3 class="title is-3 level-left">To-do List</h3>
           
-          <add-input placeholder="Add a new item to do" @btnClick="ADD_TODO" >
+          <add-input placeholder="Add a new item to do" @btnClick="addTodo" >
             <span class="fa fa-plus"></span>
           </add-input>
 
@@ -29,7 +29,7 @@
 <script>
 import AddInput from "./components/InputGroup.vue";
 import Todos from "./components/Todos.vue";
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   name: 'app',
@@ -50,6 +50,9 @@ export default {
       "ADD_TODO",
       "SET_TODOLIST"
       ]),
+    ...mapActions([
+      "addTodo"
+    ])
   }
 }
 </script>
