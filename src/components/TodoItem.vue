@@ -8,7 +8,7 @@
         </p>
         
         <button class="button is-text is-danger is-inverted"
-            @click="REMOVE_TODO">
+            @click="REMOVE_TODO(index)">
             <span class="icon">
                 <span class="fa fa-trash"></span>
             </span>
