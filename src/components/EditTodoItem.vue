@@ -31,8 +31,7 @@ import { mapActions, mapMutations } from "vuex";
 
 export default {
     props: {
-        todo: { type: Object },
-        index: {type: Number, required: true }
+        todo: { type: Object }
     },
     data(){
         return {

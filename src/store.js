@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const api = "https://private-7eb9b-chainstacktodoapp.apiary-mock.com/todos";
+
 const storeTodo = (todoList) => {
   window.localStorage.setItem("todoList", JSON.stringify(todoList));
 }
@@ -49,34 +51,60 @@ export default new Vuex.Store({
       state.todoList.push(todo);
       
       // simulate fetch
-      return new Promise((resolve) => {
-        setTimeout(()=>{
+      fetch(api, {
+        method: "POST",
+        body: JSON.stringify(todo),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
           commit("UPDATE_TODO", {...todo, isPending: false});
-        }, 500)
-      });
+        })
+
     },
     updateTodo({commit}, todo){
       todo.isPending = true;
       commit("UPDATE_TODO", todo);
 
-      // simulate fetch
-      setTimeout(()=>{
-        todo.isPending = false;
-        commit("UPDATE_TODO", {...todo, isPending: false});
-      }, 500)
+      fetch(`${api}/${todo.id}`, {method: "PUT"})
+        .then(res => res.json())
+        .then(json => {
+
+          // simulate actual data
+          todo.isPending = false;
+          commit("UPDATE_TODO", {...todo, isPending: false});
+        })
+
+
     },
     removeTodo({commit, state}, id){
+      //fire and forget
+      fetch(`${api}/${id}`, {method: "DELETE"});
+
       let index = state.todoList.findIndex(todo => todo.id === id);
       commit("REMOVE_TODO", index);
     },
     getAllTodos({commit,state}){
       state.isLoading = true;
 
-      // simulate fetch
-      setTimeout(()=>{
-        commit("SET_TODOLIST", JSON.parse(window.localStorage.getItem("todoList")) || []);
-        state.isLoading = false;
-      }, 1000);
+      fetch(api)
+        .then(res => res.json())
+        .then(json => {
+
+          json.map(todo => {
+            todo.isEditMode = false;
+            todo.isPending = false;
+            return todo;
+          })
+
+          // simulate actual data
+          commit("SET_TODOLIST", JSON.parse(window.localStorage.getItem("todoList")) || []);
+        })
+        .finally(()=>{
+          state.isLoading = false;
+        });
     }
     
   }
